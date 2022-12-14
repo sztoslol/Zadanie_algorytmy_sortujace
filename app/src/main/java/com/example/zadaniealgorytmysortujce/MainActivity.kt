@@ -24,3 +24,19 @@ class MainActivity : AppCompatActivity() {
         var button_main = findViewById<Button>(R.id.button_wykonaj)
     }
 }
+
+//Sortowanie przez wstawianie
+fun sortowanie_przez_wstawianie(array : MutableList<Int>)
+{
+    for (i in 1 until array.size) {
+        val current = array[i]
+        var j = i - 1
+
+        while (j >= 0 && array[j] > current) {
+            array[j + 1] = array[j]
+            j--
+        }
+
+        array[j + 1] = current
+    }
+}
