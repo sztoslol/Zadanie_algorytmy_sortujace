@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-//Sortowanie przez wstawianie
+//===========================Sortowanie przez wstawianie===========================
 fun sortowanie_przez_wstawianie(arr : MutableList<Int>)
 {
     for (i in 1 until arr.size) {
@@ -41,7 +41,7 @@ fun sortowanie_przez_wstawianie(arr : MutableList<Int>)
     }
 }
 
-//Sortowanie bąbelkowe
+//===============================Sortowanie bąbelkowe===============================
 fun sortowanie_babelkowe(arr: MutableList<Int>){
     for (i in 0 until arr.size - 1) {
         for (j in 0 until arr.size - i - 1) {
@@ -54,7 +54,7 @@ fun sortowanie_babelkowe(arr: MutableList<Int>){
     }
 }
 
-//Sortowanie szybkie
+//===============================Sortowanie szybkie===============================
 fun sortowanie_szybkie(array: IntArray, low: Int, high: Int) {
     if (low < high) {
         val pivot = partition(array, low, high)
@@ -80,4 +80,43 @@ fun partition(array: IntArray, low: Int, high: Int): Int {
     array[i + 1] = array[high]
     array[high] = temp
     return i + 1
+}
+
+//==========================Funkcja sortowania przez kopcoawnie==========================
+fun sortowanie_przez_kopcowanie(array: IntArray) {
+    // Budowanie kopca
+    for (i in array.size / 2 - 1 downTo 0) {
+        heapify(array, array.size, i)
+    }
+
+    for (i in array.size - 1 downTo 0) {
+        val temp = array[0]
+        array[0] = array[i]
+        array[i] = temp
+
+        heapify(array, i, 0)
+    }
+}
+
+//Funkcja pomocnicza do sortowania przez kopcowanie
+fun heapify(array: IntArray, n: Int, i: Int) {
+    var largest = i
+    val l = 2 * i + 1
+    val r = 2 * i + 2
+
+    if (l < n && array[l] > array[largest]) {
+        largest = l
+    }
+
+    if (r < n && array[r] > array[largest]) {
+        largest = r
+    }
+
+    if (largest != i) {
+        val temp = array[i]
+        array[i] = array[largest]
+        array[largest] = temp
+
+        heapify(array, n, largest)
+    }
 }
