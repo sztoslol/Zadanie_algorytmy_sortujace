@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,17 +15,32 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Przypisanie elementów layoutu do zmiennych(TextView)
-        var wynik_wstawianie = findViewById<TextView>(R.id.textView_wynik_wstawianie)
-        var wynik_babelkowe = findViewById<TextView>(R.id.textView_wynik_babelkowe)
-        var wynik_szybkie = findViewById<TextView>(R.id.textView_wynik_szybkie)
-        var wynik_heap = findViewById<TextView>(R.id.textView_wynik_heap)
-        var wynik_scalanie = findViewById<TextView>(R.id.textView_wynik_scalanie)
+        var wynik_wstawianie_textview = findViewById<TextView>(R.id.textView_wynik_wstawianie)
+        var wynik_babelkowe_textview = findViewById<TextView>(R.id.textView_wynik_babelkowe)
+        var wynik_szybkie_textview = findViewById<TextView>(R.id.textView_wynik_szybkie)
+        var wynik_heap_textview = findViewById<TextView>(R.id.textView_wynik_heap)
+        var wynik_scalanie_textview = findViewById<TextView>(R.id.textView_wynik_scalanie)
 
         //Przypisanie interaktywnych elementow layoutu do zmiennych
         var input_ile_razy = findViewById<EditText>(R.id.input_ile_razy)
         var input_ile_elementow = findViewById<EditText>(R.id.input_ile_elem)
         var button_main = findViewById<Button>(R.id.button_wykonaj)
+        if (input_ile_razy.text != null && input_ile_elementow.text != null)
+        {
+
+        }
+        else
+            Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT)
+
     }
+}
+
+//Funkcja losująca
+fun losuj(n : Int) : List<Int> {
+    val kolejnosc = generateSequence {
+        Random.nextInt(1..9)
+    }.distinct().take(n).toList()
+    return kolejnosc
 }
 
 //===========================Sortowanie przez wstawianie===========================
