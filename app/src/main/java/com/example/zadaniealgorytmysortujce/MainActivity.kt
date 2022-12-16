@@ -26,18 +26,18 @@ class MainActivity : AppCompatActivity() {
 }
 
 //Sortowanie przez wstawianie
-fun sortowanie_przez_wstawianie(array : MutableList<Int>)
+fun sortowanie_przez_wstawianie(arr : MutableList<Int>)
 {
-    for (i in 1 until array.size) {
-        val current = array[i]
+    for (i in 1 until arr.size) {
+        val current = arr[i]
         var j = i - 1
 
-        while (j >= 0 && array[j] > current) {
-            array[j + 1] = array[j]
+        while (j >= 0 && arr[j] > current) {
+            arr[j + 1] = arr[j]
             j--
         }
 
-        array[j + 1] = current
+        arr[j + 1] = current
     }
 }
 
@@ -52,4 +52,32 @@ fun sortowanie_babelkowe(arr: MutableList<Int>){
             }
         }
     }
+}
+
+//Sortowanie szybkie
+fun sortowanie_szybkie(array: IntArray, low: Int, high: Int) {
+    if (low < high) {
+        val pivot = partition(array, low, high)
+        sortowanie_szybkie(array, low, pivot - 1)
+        sortowanie_szybkie(array, pivot + 1, high)
+    }
+}
+
+//Funkcja pomocnicza do szybkiego sortowania zwraca indeks elementu pivot po przeniesieniu
+// go na swoje ostateczne miejsce między lewą a prawą podtablicą po podziale tablicy na dwie części
+fun partition(array: IntArray, low: Int, high: Int): Int {
+    val pivot = array[high]
+    var i = low - 1
+    for (j in low until high) {
+        if (array[j] <= pivot) {
+            i++
+            val temp = array[i]
+            array[i] = array[j]
+            array[j] = temp
+        }
+    }
+    val temp = array[i + 1]
+    array[i + 1] = array[high]
+    array[high] = temp
+    return i + 1
 }
