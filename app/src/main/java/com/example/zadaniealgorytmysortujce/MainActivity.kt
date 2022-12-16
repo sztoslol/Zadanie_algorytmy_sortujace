@@ -8,6 +8,7 @@ import android.widget.TextView
 import android.widget.Toast
 import kotlin.random.Random
 import kotlin.random.nextInt
+import android.system.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +28,16 @@ class MainActivity : AppCompatActivity() {
         var button_main = findViewById<Button>(R.id.button_wykonaj)
         if (input_ile_razy.text != null && input_ile_elementow.text != null)
         {
+            //stworzenie losowej listy
+            var losowa_lista = losuj(input_ile_elementow.toString().toInt())
+            //zainicjowanie tablicy zawierającej wyniki
+            var wyniki_arr = listOf<Long>(0,0,0,0,0)
 
+            //zmienne pomocnicze do obliczania czasu trwania sortoawias
+            var temp1 : Long; var temp2 : Long
+            temp1 = System.currentTimeMillis()
+            sortowanie_przez_wstawianie(losowa_lista)
+            temp2 = System.currentTimeMillis()
         }
         else
             Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT)
@@ -36,11 +46,11 @@ class MainActivity : AppCompatActivity() {
 }
 
 //Funkcja losująca
-fun losuj(n : Int) : List<Int> {
+fun losuj(n : Int) : MutableList<Int> {
     val kolejnosc = generateSequence {
         Random.nextInt(1..9)
     }.distinct().take(n).toList()
-    return kolejnosc
+    return kolejnosc.toMutableList()
 }
 
 //===========================Sortowanie przez wstawianie===========================
