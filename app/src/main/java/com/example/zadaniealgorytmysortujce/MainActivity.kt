@@ -6,7 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import kotlin.random.Random
+import java.util.Random
 import kotlin.random.nextInt
 import android.system.*
 import androidx.core.util.rangeTo
@@ -24,27 +24,27 @@ class MainActivity : AppCompatActivity() {
         var wynik_scalanie_textview = findViewById<TextView>(R.id.textView_wynik_scalanie)
 
         //Przypisanie interaktywnych elementow layoutu do zmiennych
-        var input_ile_razy = findViewById<EditText>(R.id.input_ile_razy)
-        var input_ile_elementow = findViewById<EditText>(R.id.input_ile_elem)
-        var button_main = findViewById<Button>(R.id.button_wykonaj)
+        val input_ile_razy = findViewById<EditText>(R.id.input_ile_razy)
+        val input_ile_elementow = findViewById<EditText>(R.id.input_ile_elem)
+        val button_main = findViewById<Button>(R.id.button_wykonaj)
 
         button_main.setOnClickListener {
             if (input_ile_razy.text.isNotEmpty() && input_ile_elementow.text.isNotEmpty())
             {
                 //stworzenie losowej listy
-//                var losowa_lista = losuj(input_ile_elementow.toString().toInt())
-//                //zainicjowanie tablicy zawierającej wyniki
-//                var wyniki_arr = listOf<Long>(0,0,0,0,0)
-//
-//                //zmienne pomocnicze do obliczania czasu trwania sortoawias
-//                var temp1 : Long; var temp2 : Long
-//
-//                //Pomiar 1
-//                temp1 = System.currentTimeMillis()
-//                for (i in 0..input_ile_razy.text.toString().toInt())
-//                    sortowanie_przez_wstawianie(losowa_lista)
-//                temp2 = System.currentTimeMillis()
-//                wynik_wstawianie_textview.text = calcTime(temp1, temp2).toString()
+                val losowa_lista = losuj(input_ile_elementow.text.toString().toInt())
+                //zainicjowanie tablicy zawierającej wyniki
+                var wyniki_arr = listOf<Long>(0,0,0,0,0)
+
+                //zmienne pomocnicze do obliczania czasu trwania sortoawias
+                var temp1 : Long; var temp2 : Long
+
+                //Pomiar 1
+                temp1 = System.currentTimeMillis()
+                for (i in 0..input_ile_razy.text.toString().toInt())
+                    sortowanie_przez_wstawianie(losowa_lista)
+                temp2 = System.currentTimeMillis()
+                wynik_wstawianie_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
             }
             else
                 Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
@@ -53,11 +53,9 @@ class MainActivity : AppCompatActivity() {
 }
 
 //Funkcja losująca losową liste
-fun losuj(n : Int) : MutableList<Int> {
-    val kolejnosc = generateSequence {
-        Random.nextInt(1..1000)
-    }.distinct().take(n).toList()
-    return kolejnosc.toMutableList()
+fun losuj(size: Int): MutableList<Int> {
+    val random = Random()
+    return List(size) { random.nextInt(1000) }.toMutableList()
 }
 
 //Funkcja licząca roznice miedzy pomiarami
