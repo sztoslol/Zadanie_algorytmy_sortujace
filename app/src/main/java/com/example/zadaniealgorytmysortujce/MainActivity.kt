@@ -39,12 +39,19 @@ class MainActivity : AppCompatActivity() {
                 //zmienne pomocnicze do obliczania czasu trwania sortoawias
                 var temp1 : Long; var temp2 : Long
 
-                //Pomiar 1
+                //Pomiar 1 - sortowanie przez wstawianie
                 temp1 = System.currentTimeMillis()
                 for (i in 0..input_ile_razy.text.toString().toInt())
                     sortowanie_przez_wstawianie(losowa_lista)
                 temp2 = System.currentTimeMillis()
                 wynik_wstawianie_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
+
+                //Pomiar 2 - sortowanie babelkowe
+                temp1 = System.currentTimeMillis()
+                for (i in 0..input_ile_razy.text.toString().toInt())
+                    sortowanie_babelkowe(losowa_lista)
+                temp2 = System.currentTimeMillis()
+                wynik_babelkowe_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
             }
             else
                 Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
