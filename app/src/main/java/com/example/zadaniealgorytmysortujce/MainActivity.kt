@@ -7,9 +7,6 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import java.util.Random
-import kotlin.random.nextInt
-import android.system.*
-import androidx.core.util.rangeTo
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +30,6 @@ class MainActivity : AppCompatActivity() {
             {
                 //stworzenie losowej listy
                 val losowa_lista = losuj(input_ile_elementow.text.toString().toInt())
-                //zainicjowanie tablicy zawierającej wyniki
-                var wyniki_arr = listOf<Long>(0,0,0,0,0)
 
                 //zmienne pomocnicze do obliczania czasu trwania sortoawias
                 var temp1 : Long; var temp2 : Long
@@ -52,6 +47,27 @@ class MainActivity : AppCompatActivity() {
                     sortowanie_babelkowe(losowa_lista)
                 temp2 = System.currentTimeMillis()
                 wynik_babelkowe_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
+
+                //Pomiar 3 - sortowanie szybkie
+                temp1 = System.currentTimeMillis()
+                for (i in 0..input_ile_razy.text.toString().toInt())
+                    sortowanie_szybkie(losowa_lista, 0, losowa_lista.size - 1)
+                temp2 = System.currentTimeMillis()
+                wynik_szybkie_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
+
+                //Pomiar 4 - sortowanie przez kopcowanie
+                temp1 = System.currentTimeMillis()
+                for (i in 0..input_ile_razy.text.toString().toInt())
+                    sortowanie_przez_kopcowanie(losowa_lista)
+                temp2 = System.currentTimeMillis()
+                wynik_heap_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
+
+                //Pomiar 5 - sortowanie przez scalanie
+                temp1 = System.currentTimeMillis()
+                for (i in 0..input_ile_razy.text.toString().toInt())
+                    sortowanie_przez_scalanie(losowa_lista.toIntArray())
+                temp2 = System.currentTimeMillis()
+                wynik_scalanie_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
             }
             else
                 Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
@@ -101,9 +117,9 @@ fun sortowanie_babelkowe(arr: MutableList<Int>){
 }
 
 //===============================Sortowanie szybkie===============================
-fun sortowanie_szybkie(array: IntArray, low: Int, high: Int) {
+fun sortowanie_szybkie(array: MutableList<Int>, low: Int, high: Int) {
     if (low < high) {
-        val pivot = partition(array, low, high)
+        val pivot = partition(array.toIntArray(), low, high)
         sortowanie_szybkie(array, low, pivot - 1)
         sortowanie_szybkie(array, pivot + 1, high)
     }
@@ -129,7 +145,7 @@ fun partition(array: IntArray, low: Int, high: Int): Int {
 }
 
 //==========================Funkcja sortowania przez kopcoawnie==========================
-fun sortowanie_przez_kopcowanie(array: IntArray) {
+fun sortowanie_przez_kopcowanie(array: MutableList<Int>) {
     // Budowanie kopca
     for (i in array.size / 2 - 1 downTo 0) {
         heapify(array, array.size, i)
@@ -145,7 +161,7 @@ fun sortowanie_przez_kopcowanie(array: IntArray) {
 }
 
 //Funkcja pomocnicza do sortowania przez kopcowanie
-fun heapify(array: IntArray, n: Int, i: Int) {
+fun heapify(array: MutableList<Int>, n: Int, i: Int) {
     var largest = i
     val l = 2 * i + 1
     val r = 2 * i + 2
