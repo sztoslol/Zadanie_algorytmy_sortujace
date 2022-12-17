@@ -9,6 +9,7 @@ import android.widget.Toast
 import kotlin.random.Random
 import kotlin.random.nextInt
 import android.system.*
+import androidx.core.util.rangeTo
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,31 +27,43 @@ class MainActivity : AppCompatActivity() {
         var input_ile_razy = findViewById<EditText>(R.id.input_ile_razy)
         var input_ile_elementow = findViewById<EditText>(R.id.input_ile_elem)
         var button_main = findViewById<Button>(R.id.button_wykonaj)
-        if (input_ile_razy.text != null && input_ile_elementow.text != null)
-        {
-            //stworzenie losowej listy
-            var losowa_lista = losuj(input_ile_elementow.toString().toInt())
-            //zainicjowanie tablicy zawierającej wyniki
-            var wyniki_arr = listOf<Long>(0,0,0,0,0)
 
-            //zmienne pomocnicze do obliczania czasu trwania sortoawias
-            var temp1 : Long; var temp2 : Long
-            temp1 = System.currentTimeMillis()
-            sortowanie_przez_wstawianie(losowa_lista)
-            temp2 = System.currentTimeMillis()
+        button_main.setOnClickListener {
+            if (input_ile_razy.text.isNotEmpty() && input_ile_elementow.text.isNotEmpty())
+            {
+                //stworzenie losowej listy
+//                var losowa_lista = losuj(input_ile_elementow.toString().toInt())
+//                //zainicjowanie tablicy zawierającej wyniki
+//                var wyniki_arr = listOf<Long>(0,0,0,0,0)
+//
+//                //zmienne pomocnicze do obliczania czasu trwania sortoawias
+//                var temp1 : Long; var temp2 : Long
+//
+//                //Pomiar 1
+//                temp1 = System.currentTimeMillis()
+//                for (i in 0..input_ile_razy.text.toString().toInt())
+//                    sortowanie_przez_wstawianie(losowa_lista)
+//                temp2 = System.currentTimeMillis()
+//                wynik_wstawianie_textview.text = calcTime(temp1, temp2).toString()
+            }
+            else
+                Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
         }
-        else
-            Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT)
-
     }
 }
 
-//Funkcja losująca
+//Funkcja losująca losową liste
 fun losuj(n : Int) : MutableList<Int> {
     val kolejnosc = generateSequence {
-        Random.nextInt(1..9)
+        Random.nextInt(1..1000)
     }.distinct().take(n).toList()
     return kolejnosc.toMutableList()
+}
+
+//Funkcja licząca roznice miedzy pomiarami
+fun calcTime(t1 : Long, t2 : Long) : Long
+{
+    return t2 - t1
 }
 
 //===========================Sortowanie przez wstawianie===========================
