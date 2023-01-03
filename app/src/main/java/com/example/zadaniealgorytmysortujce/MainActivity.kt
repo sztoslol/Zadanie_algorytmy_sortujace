@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import java.util.Random
@@ -19,6 +20,13 @@ class MainActivity : AppCompatActivity() {
         var wynik_szybkie_textview = findViewById<TextView>(R.id.textView_wynik_szybkie)
         var wynik_heap_textview = findViewById<TextView>(R.id.textView_wynik_heap)
         var wynik_scalanie_textview = findViewById<TextView>(R.id.textView_wynik_scalanie)
+
+        //Przypisanie kontrolek ProgressBar do zmiennych
+        var progressbar_wstawianie = findViewById<ProgressBar>(R.id.progressBar_wstawianie)
+        var progressbar_babelkowe = findViewById<ProgressBar>(R.id.progressBar_babelkowe)
+        var progressbar_szybkie = findViewById<ProgressBar>(R.id.progressBar_szybkie)
+        var progressbar_heap = findViewById<ProgressBar>(R.id.progressBar_heap)
+        var progressbar_scalanie = findViewById<ProgressBar>(R.id.progressBar_scalanie)
 
         //Przypisanie interaktywnych elementow layoutu do zmiennych
         val input_ile_razy = findViewById<EditText>(R.id.input_ile_razy)
@@ -36,8 +44,10 @@ class MainActivity : AppCompatActivity() {
 
                 //Pomiar 1 - sortowanie przez wstawianie
                 temp1 = System.currentTimeMillis()
-                for (i in 0..input_ile_razy.text.toString().toInt())
+                for (i in 0..input_ile_razy.text.toString().toInt()) {
                     sortowanie_przez_wstawianie(losowa_lista)
+
+                }
                 temp2 = System.currentTimeMillis()
                 wynik_wstawianie_textview.text = calcTime(temp1, temp2).toString() + " milisekund"
 
